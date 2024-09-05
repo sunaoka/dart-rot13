@@ -33,8 +33,12 @@ jobs:
         with:
           sdk: ${{ matrix.sdk }}
 
-      - name: install dependencies
-        run: dart pub get
+      - name: Install dependencies
+        uses: nick-fields/retry@v3
+        with:
+          timeout_seconds: 30
+          max_attempts: 3
+          command: dart pub get
 
       - name: dart format
         run: dart format --output=none --set-exit-if-changed .
